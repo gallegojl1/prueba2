@@ -29,3 +29,6 @@ jobs:
         run: |
             sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
             echo "hola mundo"
+            docker login ghcr.io -u gallegojl1 -p ${{ secrets.EXAMPLE_TOKEN }}
+            docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
+            docker rum -d imagen-docker-web
