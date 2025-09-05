@@ -30,15 +30,11 @@ jobs:
             sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << 'EOF'
             echo "hola mundo"
         
-            # Fix DNS
-            sudo rm -f /etc/resolv.conf
-            echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1" | sudo tee /etc/resolv.conf
-        
             # Docker login & deploy
             echo ${{ secrets.EXAMPLE_TOKEN }} | docker login ghcr.io -u gallegojl1 --password-stdin
             docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
             docker stop imagen-docker-web || true
             docker rm imagen-docker-web || true
             docker run -d --name imagen-docker-web ghcr.io/gallegojl1/imagen-docker-web:latest
-            EOF
+         
             
