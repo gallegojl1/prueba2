@@ -20,15 +20,15 @@ jobs:
             password: ${{ secrets.EXAMPLE_TOKEN }}  # se da da alta en las setting del usuario->developer setting-> personal access token-> tokens: Me genera este:  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
                                                     # despues este token hay que darlo de alta en la variable del repositorio: seting->secrets and variables-> actions-> repository secrets      
 
-      - name: copy proyecto
-        run: |
-          scp -r ./* ${{ secrets.AUTH_SERVER }}:/home/ubuntu/proyecto
+      #- name: copy proyecto
+      #  run: |
+      #    scp -r ./* ${{ secrets.AUTH_SERVER }}:/home/ubuntu/proyecto
           
       - name: ssh into server
         run: |
             sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
               cd /home/ubuntu/proyecto
-
+              scp -r ./* ${{ secrets.AUTH_SERVER }}:/home/ubuntu/proyecto
               # Opcional: parar contenedores existentes
               sudo docker-compose down || true
 
