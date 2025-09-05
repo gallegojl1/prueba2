@@ -18,7 +18,7 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.EXAMPLE_TOKEN }}  # se da da alta en las setting del usuario->developer setting-> personal access token-> tokens: Me genera este:  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
-                                                    # despues este token hay que darlo de alta en la variable del repositorio: seting->secrets and variables-> actions-> repository secrets    
+                                                    # despues este token hay que darlo de alta en la variable del repositorio: seting->secrets and variables-> actions-> repository secrets      
 
       - name: build image
         run: |
