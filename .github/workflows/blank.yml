@@ -24,3 +24,8 @@ jobs:
         run: |
           docker build . --tag ghcr.io/gallegojl1/imagen-docker-web:latest
           docker push ghcr.io/gallegojl1/imagen-docker-web:latest
+          
+      - name: ssh into server
+        run: |
+            sshpass -p ${secrets.PASS_SERVER}} ssh -o StricHostKeyChecking=no ${{secrets.AUTH_SERVER}} << EOF
+            echo "hola mundo"
