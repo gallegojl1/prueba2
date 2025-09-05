@@ -27,9 +27,12 @@ jobs:
           
       - name: ssh into server
         run: |
-            sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} 
-            echo "hola mundo"
-            docker login ghcr.io -u gallegojl1 -p ${{ secrets.EXAMPLE_TOKEN }}
-            docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
-            docker run -d --name imagen-docker-web
+          sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << 'EOF'
+          echo "hola mundo"
+          echo ${{ secrets.EXAMPLE_TOKEN }} | docker login ghcr.io -u gallegojl1 --password-stdin
+          docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
+          docker stop imagen-docker-web || true
+          docker rm imagen-docker-web || true
+          docker run -d --name imagen-docker-web ghcr.io/gallegojl1/imagen-docker-web:latest
+          EOF
             
