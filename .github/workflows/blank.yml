@@ -32,3 +32,4 @@ jobs:
             docker login ghcr.io -u gallegojl1 -p ${{ secrets.EXAMPLE_TOKEN }}
             docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
             docker run -d --name imagen-docker-web
+            
