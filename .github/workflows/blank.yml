@@ -31,4 +31,4 @@ jobs:
             echo "hola mundo"
             docker login ghcr.io -u gallegojl1 -p ${{ secrets.EXAMPLE_TOKEN }}
             docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
-            docker rum -d imagen-docker-web
+            docker rum -d --name imagen-docker-web
