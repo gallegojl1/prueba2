@@ -27,5 +27,5 @@ jobs:
           
       - name: ssh into server
         run: |
-            sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StricHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
+            sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
             echo "hola mundo"
