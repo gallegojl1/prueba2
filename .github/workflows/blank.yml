@@ -20,21 +20,19 @@ jobs:
             password: ${{ secrets.EXAMPLE_TOKEN }}  # se da da alta en las setting del usuario->developer setting-> personal access token-> tokens: Me genera este:  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
                                                     # despues este token hay que darlo de alta en la variable del repositorio: seting->secrets and variables-> actions-> repository secrets      
 
-      - name: build image
+      - name: copy proyecto
         run: |
-          docker build . --tag ghcr.io/gallegojl1/imagen-docker-web:latest
-          docker push ghcr.io/gallegojl1/imagen-docker-web:latest
+          scp -r ./* ${{ secrets.AUTH_SERVER }}:/home/ubuntu/proyecto
           
       - name: ssh into server
         run: |
             sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
-              echo "hola mundo"
-        
-              # Docker login & deploy
-              echo ${{ secrets.EXAMPLE_TOKEN }} | docker login ghcr.io -u gallegojl1 --password-stdin
-              sudo docker pull ghcr.io/gallegojl1/imagen-docker-web:latest
-              sudo docker stop imagen-docker-web || true
-              sudo docker rm imagen-docker-web || true
-              sudo docker run -d --name imagen-docker-web ghcr.io/gallegojl1/imagen-docker-web:latest
+              cd /home/ubuntu/proyecto
+
+              # Opcional: parar contenedores existentes
+              sudo docker-compose down || true
+
+              # Levantar contenedores según docker-compose.yml
+              sudo docker-compose up -d
             EOF
             
