@@ -6,25 +6,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
+  create-docker-image:
+    runs-on: ubuntu-latest     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      - name: login to github container registry
+        uses: docker/login-action@v1
+        with: 
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.EXAMPLE_TOKEN }}  # se da da alta en las setting del usuario->developer setting-> personal access token-> tokens: Me genera este:  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
+                                                    # despues este token hay que darlo de alta en la variable del repositorio: seting->secrets and variables-> actions-> repository secrets    
 
-      - name: Sync project to server
+      - name: build image
         run: |
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.TARGET_DIR }}
-
-      - name: Run docker compose on server
-        run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.TARGET_DIR }} && docker compose up -d --build"
-
+          docker build . --tag ghcr.io/gallegojl1/imagen-docker-web:latest
+          docker push ghcr.io/gallegojl1/imagen-docker-web:latest
