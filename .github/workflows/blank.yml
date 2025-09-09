@@ -12,12 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
-      - name: Copy folder content recursively to remote
-              uses: ArthurYdalgo/github-action-scp@release
-              with:
-                local: .
-                remote: /root/proyect
-                host: ${{ secrets.HOST }}
-                username: ${{ secrets.USERNAME }}
-                password: ${{ secrets.PASS_SERVER }}
-
+      - name: Copiar el contenido del repositorio con scp
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          source: "site/*"
+          target: "/root/proyect"
