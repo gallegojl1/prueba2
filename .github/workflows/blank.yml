@@ -9,18 +9,19 @@ jobs:
   create-docker-image:
     runs-on: ubuntu-latest     
     steps:         
-        - name: Copy project files to server
-          run: |
-            sshpass -p ${{ secrets.PASS_SERVER }} scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.AUTH_SERVER }}:/root/proyect/
-        
-        - name: Deploy with Docker Compose
-          run: |
-            sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
-              pwd
-              ls -la
-              cd /root/proyect
-              ls -la   # para comprobar que los archivos están
-              sudo docker-compose down || true   # parar si hay algo previo
-              sudo docker-compose up -d --build
-            EOF
+      - name: Checkout code
+        uses: actions/checkout@v4   # <---- importante!
+
+      - name: Copy project files to server
+        run: |
+          sshpass -p ${{ secrets.PASS_SERVER }} scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.AUTH_SERVER }}:/root/proyect/
+
+      - name: Deploy with Docker Compose
+        run: |
+          sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << 'EOF'
+            cd /root/proyect
+            ls -la   # aquí ya deberías ver docker-compose.yml
+            sudo docker-compose down || true
+            sudo docker-compose up -d --build
+          EOF
             
