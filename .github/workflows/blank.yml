@@ -10,18 +10,14 @@ jobs:
     runs-on: ubuntu-latest     
     steps:         
       - name: Checkout code
-        uses: actions/checkout@v4   # <---- importante!
+        uses: actions/checkout@master
 
-      - name: Copy project files to server
-        run: |
-          sshpass -p ${{ secrets.PASS_SERVER }} scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.AUTH_SERVER }}:/root/proyect/
+      - name: Copy folder content recursively to remote
+              uses: ArthurYdalgo/github-action-scp@release
+              with:
+                local: .
+                remote: /root/proyect
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                password: ${{ secrets.PASS_SERVER }}
 
-      - name: Deploy with Docker Compose
-        run: |
-          sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
-            cd /root/proyect
-            ls -la   # aquí ya deberías ver docker-compose.yml
-            sudo docker-compose down || true
-            sudo docker-compose up -d --build
-          EOF
-            
