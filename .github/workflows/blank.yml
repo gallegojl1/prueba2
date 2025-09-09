@@ -28,7 +28,7 @@ jobs:
         with:
           host: 217.160.88.215
           username: root
-          key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPkT2llJaO+zonEbS8vdL3lhWnQ4gj9fIxwPAsuwdxp github-actions-deploy
+          key: $ {{ SSH_PRIVATE_KEY }}
           port: 22
           script: |
             cd /root/proyect
