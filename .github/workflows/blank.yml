@@ -21,8 +21,16 @@ jobs:
           port: 22
           source: "."
           target: /root/proyect
+      - name: Deploy with Docker Compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: 217.160.88.215
+          username: root
+          port: 22
+          key: ${{ secrets.SSHKEY }}
           script: |
             cd /root/proyect
-            echo "hola mundo" > prueba.txt
-            sudo docker-compose down || true
-            sudo docker-compose up -d --build
+            ls -la
+            #sudo docker-compose down || true
+            #sudo docker-compose up -d --build
+          
