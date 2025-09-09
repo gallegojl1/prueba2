@@ -10,15 +10,14 @@ jobs:
     runs-on: ubuntu-latest     
     steps:         
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
 
-      - name: Copiar el contenido del repositorio con scp
-        uses: appleboy/scp-action@master
-        env:
-          HOST: 217.160.88.215
-          USERNAME: root
-          PORT: 22
-          KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOzvKwDECKvHdGEP8YGY+b6KbaOnSaS1aSe/giv9ymvqnfmU5SujoyuBoxa4hU21YvdxAU8A0Plp0JIksTutRHWPD4W3TZiqm7Yhd+4wD8FcJ4TFnlWk46CrbNrk8qsXmYwM5hipK9C9ZkCkbsQ8/kmcJzM9e9E3WPN9WGxvfpZ22lEXEmtL5GwxcSjXdT1ApMyVMAkZVyiFPF5fll3r/yOwcxfGZkJP9CNgRkwg2gdrzggzpmp4Hex21uSesnSwTbqmAq/7ri1eldCgr04ioBXRmiAmOGT1b2UMg+KmZYnmgbT6O7Gl9zYyBEKh6VqY4ais9V1YP0b5IKfNS5O1RwH59lnrulAg+ND9ZQeezmZDM9S8nUh2Xo2COCsIR5kQmW3vNeK8DwmUmvaKdKKXnvgGFL3VEaThxIAjcfp1ALbGxoGlnpzCEYsHHa8YPlQxhULnHqp8oWlsK+z4ojWUZeU43ehmIZHz2rqdcEFl04d0X8UWHx6CrO7ArS3CsnetMinVhNUH9Sqd/1Y6akGFbp1nJYDOZ4P00/F15LSUT1uof8Cwl60tLgNSaiMbOxqf/vFUxDYQmMbWV2Ny+rv9BHXnPzsmjOt9BZv9ZXswoKVfeDvg1UDJASEq0Iu0drBP6UcThfwQeMJny6Hva/7fwVcCryaGmASFzYYygyJb9JiQ== gallegojl1@hotmail.com
+      - name: Copy file via SSH password
+        uses: appleboy/scp-action@v1
         with:
-          source: "site/*"
-          target: "/root/proyect"
+          host: 217.160.88.215
+          username: root
+          password: 02qHfCw9
+          port: 22
+          source: "."
+          target: /root/proyect
