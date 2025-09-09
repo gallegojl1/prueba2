@@ -8,22 +8,7 @@ on:
 jobs:
   create-docker-image:
     runs-on: ubuntu-latest     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: login to github container registry
-        uses: docker/login-action@v1
-        with: 
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.EXAMPLE_TOKEN }}  # se da da alta en las setting del usuario->developer setting-> personal access token-> tokens: Me genera este:  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
-                                                    # despues este token hay que darlo de alta en la variable del repositorio: seting->secrets and variables-> actions-> repository secrets      
-
-      #- name: copy proyecto
-      #  run: |
-      #    scp -r ./* ${{ secrets.AUTH_SERVER }}:/home/ubuntu/proyecto
-          
+    steps:         
       - name: ssh into server
         run: |
             #sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF   
