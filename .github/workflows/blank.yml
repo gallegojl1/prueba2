@@ -22,15 +22,3 @@ jobs:
           source: "."
           target: /root/proyect
 
-      # Ejecutar docker-compose en el servidor
-      - name: Desplegar con Docker Compose
-        uses: appleboy/ssh-action@master
-        with:
-          host: 217.160.88.215
-          username: root
-          password: 02qHfCw9
-          port: 22
-          script: |
-            cd /root/proyect
-            sudo docker-compose down || true
-            sudo docker-compose up -d --build
