@@ -21,3 +21,12 @@ jobs:
           port: 22
           source: "."
           target: /root/proyect
+      - name: ls -a via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /root/proyect
+            ls -a
+          host: 217.160.88.215
+          user: root
+          key: 02qHfCw9
