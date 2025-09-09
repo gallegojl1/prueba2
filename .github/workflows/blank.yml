@@ -16,6 +16,8 @@ jobs:
         - name: Deploy with Docker Compose
           run: |
             sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
+              pwd
+              ls -la
               cd /root/proyect
               ls -la   # para comprobar que los archivos están
               sudo docker-compose down || true   # parar si hay algo previo
