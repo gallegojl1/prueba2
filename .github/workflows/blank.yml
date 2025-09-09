@@ -13,11 +13,11 @@ jobs:
         run: |
             #sshpass -p ${{ secrets.PASS_SERVER }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF   
             sshpass -p ${{ secrets.PASS_SERVER }} scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.AUTH_SERVER }}:/root/proyect << EOF
+              ls -la
               cd /root/proyect
               #scp -r ./* ${{ secrets.AUTH_SERVER }}:/home/ubuntu/proyecto
               # Opcional: parar contenedores existentes
-              sudo docker-compose down || true
-
+              ls -la
               # Levantar contenedores según docker-compose.yml
               sudo docker-compose up -d
             EOF
