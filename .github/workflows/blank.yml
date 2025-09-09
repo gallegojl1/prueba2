@@ -23,5 +23,6 @@ jobs:
           target: /root/proyect
           script: |
             cd /root/proyect
+            echo "hola mundo" > prueba.txt
             sudo docker-compose down || true
             sudo docker-compose up -d --build
