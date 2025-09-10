@@ -17,7 +17,7 @@ jobs:
         with:
           host: 217.160.88.215
           username: root
-          password: 02qHfCw9
+          password: L8C0aj9B
           port: 22
           source: "."
           target: /root/proyect
