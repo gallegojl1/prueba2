@@ -22,3 +22,13 @@ jobs:
           source: "."
           target: /root/proyect
           
+      - name: docker-compose via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /root/proyect
+            docker compose up -d
+          host: 217.160.88.215
+          user: root
+          port: 22
+          pass: L8C0aj9B
